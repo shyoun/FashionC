@@ -23,7 +23,7 @@ export const KakaoLogin = async () => {
   console.log('get code response: ', result)
 
   const code = result.params.code
-  let tokenBody = `grant_type=Content-Type&client_id=${RESTAppKey}&redirect_uri=${redirectUrl}&code=${code}&client_secret=${SecretKey}`
+  let tokenBody = `grant_type=authorization_code&client_id=${RESTAppKey}&redirect_uri=${redirectUrl}&code=${code}&client_secret=${SecretKey}`
 
   // result = await fetch(kakaoHost+'/oauth/token', {
   result = await fetch('https://kauth.kakao.com/oauth/token', {
