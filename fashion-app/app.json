@@ -11,6 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "FashionC",
     "facebookScheme": "fb1974063262681467",
     "icon": "./assets/icon.png",
     "splash": {

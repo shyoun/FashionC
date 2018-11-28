@@ -18,11 +18,12 @@ class GoogleLogin extends React.Component {
 
       console.log(result)
       if (result.type === 'success') {
-        Alert.alert(
-          'Logged in!', 
-          `Hi ${result.user.givenName}!`,
-        )
-        return result.accessToken
+        // Alert.alert(
+        //   'Logged in!', 
+        //   `Hi ${result.user.givenName}!`,
+        // )
+        // return result.accessToken
+        return result.user
       } else {
         return { cancelled: true }
       }
@@ -31,10 +32,15 @@ class GoogleLogin extends React.Component {
     }
   }
 
+  handler = async () => {
+    const user = await this.signInWIthGoogleAsync()
+    this.props.handler(user)
+  }
+
   render() {
     return(
       <View style={styles.container}>
-        <Icon.Button name="google" onPress={this.signInWIthGoogleAsync} />
+        <Icon.Button name="google" onPress={this.handler} />
       </View>
     )
   }
