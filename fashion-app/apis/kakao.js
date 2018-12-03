@@ -25,7 +25,6 @@ export const KakaoLogin = async () => {
   const code = result.params.code
   let tokenBody = `grant_type=authorization_code&client_id=${RESTAppKey}&redirect_uri=${redirectUrl}&code=${code}&client_secret=${SecretKey}`
 
-  // result = await fetch(kakaoHost+'/oauth/token', {
   result = await fetch('https://kauth.kakao.com/oauth/token', {
     method: 'POST',
     headers: {
@@ -34,4 +33,28 @@ export const KakaoLogin = async () => {
     body: tokenBody,
   })
   console.log('get token response: ', result)
+  tokenResponse = await result.json()
+  console.log(tokenResponse)
+ 
+  //TODO: 해당 유저 정보 취득
+  /*
+  GET/POST /v2/user/me HTTP/1.1
+  Host: kapi.kakao.com
+  Authorization: Bearer {access_token}
+  Content-type: application/x-www-form-urlencoded;charset=utf-8
+  */
+}
+
+const TokenRefresh = async (refreshToken) => {
+  let tokenBody = `grant_type=refresh_token&client_id=${RESTAppKey}&refresh_token=${refreshToken}&client_secret=${SecretKey}`
+
+  response = await fetch('https://kauth.kakao.com/oauth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: tokenBody,
+  })
+
+  return response
 }
