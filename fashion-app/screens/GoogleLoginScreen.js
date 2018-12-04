@@ -40,7 +40,7 @@ class GoogleLogin extends React.Component {
   render() {
     return(
       <View style={styles.container}>
-        <Icon.Button name="google" onPress={this.handler} />
+        <Icon.Button name="google" onPress={this.handler}>Continue with Google</Icon.Button>
       </View>
     )
   }
@@ -48,7 +48,8 @@ class GoogleLogin extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: 100,
+    width: 222,
+    height: 49,
     paddingTop: 10,
   },
 })

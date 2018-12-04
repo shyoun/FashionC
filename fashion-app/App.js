@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { Constants, AuthSession } from 'expo'
+import { StyleSheet, Text, View, Button, Image } from 'react-native'
+import { Constants } from 'expo'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
-import { KakaoLogin } from './apis/kakao'
+import KakaoLogin from './screens/KakaoLoginScreen'
+import UserInfoScreen from './screens/UserInfoScreen'
 
 
 import FBLogIn from './screens/FBLoginScreen'
@@ -17,6 +18,10 @@ export default class App extends React.Component {
 }
 
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    'title': 'Login',
+  }
+
   state = {
     user: null,
   }
@@ -24,46 +29,22 @@ class HomeScreen extends React.Component {
   userHandler = (user) => {
     this.setState({user}, () => {this.props.navigation.navigate('UserInfo', {
       user: this.state.user,
-    })})
+    })}, this.props.navigation.navigate('UserInfo', { user }))
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.titleBox}>
-          <Text style={styles.loginText}>Login screen</Text>
-        </View>
         <View style={styles.loginBox}>
           <FBLogIn handler={this.userHandler} />
           <GoogleLogIn handler={this.userHandler} />
-          <Button 
-            title="카카오 로그인"
-            onPress={ KakaoLogin }
-          />
+          <KakaoLogin handler={this.userHandler} />
         </View>
       </View>
     )
   }
 }
 
-class UserInfoScreen extends React.Component {
-  render() {
-    const { navigation } = this.props
-    const user = navigation.getParam('user', 'No USER DATA')
-
-
-    return (
-      <View style={{flex:1, alignsItems: 'center', justifyContent: 'center',}}>
-        <Text>User information</Text>
-        <Text>{JSON.stringify(user)}</Text>
-        <Button 
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    )
-  }
-}
 
 const AppNavigator = createStackNavigator(
   {
